@@ -102,7 +102,9 @@
             return element.intlTelInput("isValidNumber");
           };
           element.on('blur keyup change', function(event) {
-            return scope.$apply(read);
+            if (scope.$root.$$phase != '$apply' && scope.$root.$$phase != '$digest') {
+              return scope.$apply(read);
+            }
           });
           return element.on('$destroy', function() {
             element.intlTelInput('destroy');
